@@ -1,0 +1,69 @@
+<div class="row">
+  <div class="col-lg-9">
+    <div class="alert alert-default">
+      <strong *ngIf=carts>
+        <i class="fa fa-user"></i> {{customer.name}}
+      </strong>
+      <small *ngIf=carts>{{customer.email}}</small>
+    </div>
+  </div>
+  <div class="col-lg-3" *ngIf="!checkout">
+    <a (click)="deleteCart()" class="btn btn-danger">DELETE</a>
+  </div>
+</div>
+<table class="table table-striped table-bordered table-hover">
+  <thead>
+    <tr>
+      <th>Product Name</th>
+      <th>Unit Price</th>
+      <th>Quantity</th>
+      <th>Subtotal</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+
+    <tr *ngFor="let cart of carts">
+      <td>{{cart.product.name}}</td>
+      <td> {{cart.product.price}}</td>
+      <td>
+        <a (click)="decreaseQuantity(cart.product.id)" *ngIf="cart.quantity>1 && !checkout">
+          <i class="fa fa-minus-circle"></i>
+        </a>
+        {{cart.quantity}}
+        <a (click)="increaseQuantity(cart.product.id)" *ngIf="(cart.product.stock > cart.quantity) && !checkout">
+          <i class="fa fa-plus-circle"></i>
+        </a>
+      </td>
+      <td> {{cart.product.price * cart.quantity}}</td>
+      <td>
+        <a (click)="deleteProduct(cart.product.id)" *ngIf="!checkout">
+          <i class="fa fa-times-circle"></i>
+        </a>
+      </td>
+
+    </tr>
+
+    <tr>
+      <td colspan="4">Subtotal</td>
+      <td>{{subtotal}}</td>
+    </tr>
+
+    <tr>
+      <td colspan="4">Tax</td>
+      <td>Rs. {{tax}}</td>
+    </tr>
+
+    <tr>
+      <td colspan="4">Grand Total</td>
+      <td>Rs. {{grandTotal}}</td>
+    </tr>
+
+    <tr>
+      <td colspan="5" *ngIf="subtotal > 0">
+        <a (click)="toggleCheckout()" class="btn btn-primary">CHECKOUT Rs. {{grandTotal}}</a>
+      </td>
+    </tr>
+
+  </tbody>
+</table>

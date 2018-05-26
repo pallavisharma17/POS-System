@@ -1,0 +1,30 @@
+<form>
+  <input type="text" class="txt" name="search" placeholder="Search product.." [(ngModel)]="search" (input)="getSearchProducts()">
+</form>
+<hr>
+<div class="row">
+
+  <div class="col-lg-4 col-md-4" *ngFor="let product of products">
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        Code- {{product.code}} {{product.name}}
+      </div>
+      <div class="panel-body">
+        <p>{{product.description}}</p>
+      </div>
+      <div class="panel-footer">
+        <div>
+          Rs. {{product.price}}
+          <hr> Stock-{{product.stock}}
+        </div>
+        <hr>
+        <div *ngIf=customerId>
+          <a (click)="addProductToCart(product.id)" class="btn btn-primary">Add to cart</a>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+</div>
+<!-- /. PRODUCT ROW  -->

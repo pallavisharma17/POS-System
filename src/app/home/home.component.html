@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+</head>
+
+<body>
+
+  <div id="page-inner">
+    <div class="row">
+
+      <div class="col-lg-7" *ngIf=!checkout>
+        <app-product [customerId]="customerId" [carts]="carts" (res)="updateCart($event)"></app-product>
+      </div>
+
+      <div class="col-lg-5">
+
+        <div class="row" *ngIf="!customerId && !checkout">
+          <app-customer [customerId]="customerId" (res)="updateCustId($event)"></app-customer>
+        </div>
+
+        <div class="row" *ngIf=customerId>
+          <app-cart [customerId]="customerId" [carts]="carts" (res)="updateCart($event)" [checkout]="checkout" (resCheck)="updateCheckout($event)"></app-cart>
+        </div>
+
+      </div>
+
+      <div class="col-lg-7" *ngIf=checkout>
+
+        <div class="row">
+          <app-payment [customerId]="customerId"></app-payment>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+</body>
+
+</html>
+
+
+
+
+
+
+<!-- <div id="page-inner">
+    <div class="row">
+      <div class="col-lg-7">
+        <app-product></app-product>
+      </div>
+      <div class="col-lg-5">
+
+        <div class="row">
+          <app-customer></app-customer>
+        </div>
+        <div class="row" *ngIf=customerId>
+          <app-cart></app-cart>
+        </div>
+
+      </div>
+    </div>
+  </div> -->

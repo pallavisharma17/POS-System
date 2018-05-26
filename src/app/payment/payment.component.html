@@ -1,0 +1,24 @@
+<p>
+  payment works! {{customerId}}
+</p>
+<p>Sales Executive: Pallavi Sharma</p>
+
+<div class="container">
+  <div *ngFor="let choice of ModeOfPaymentValues">
+    <label>
+      <input type="radio"    [(ngModel)]="modeOfPayment"  [value]="ModeOfPayment[choice]">
+        {{choice}}
+    </label>
+    </div>
+
+    </div>
+
+    <div class="row">
+      <div class="col-lg-7">
+        &nbsp;
+      </div>
+      <div class="col-lg-5 ">
+        <a class="btn btn-primary">Save Order</a>  &nbsp;
+        <a class="btn btn-primary">Place Order</a>
+      </div>
+    </div>
