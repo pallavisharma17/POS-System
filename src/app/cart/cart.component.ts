@@ -16,7 +16,6 @@ export class CartComponent implements OnInit {
   @Input() carts: any;
   ngOnChanges(changes) {
     this.getCart()
-    // this.calculateBill()
   }
   @Output() res = new EventEmitter<any>();
   @Input() checkout: boolean;
@@ -118,10 +117,10 @@ export class CartComponent implements OnInit {
   }
 
   toggleCheckout() {
-
     this.checkout = true;
-
     this.resCheck.emit(this.checkout);
   }
+
+  
 
 }

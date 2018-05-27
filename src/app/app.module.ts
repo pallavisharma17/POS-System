@@ -28,7 +28,7 @@ const routes: Routes = [
     component: CartComponent
   },
   {
-    path: 'orders',
+    path: 'orders/:order_type',
     component: OrderComponent
   }
 ]

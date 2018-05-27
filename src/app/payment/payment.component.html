@@ -3,22 +3,37 @@
 </p>
 <p>Sales Executive: Pallavi Sharma</p>
 
-<div class="container">
+<div class="container" *ngIf="(!saved && !placed)">
   <div *ngFor="let choice of ModeOfPaymentValues">
     <label>
-      <input type="radio"    [(ngModel)]="modeOfPayment"  [value]="ModeOfPayment[choice]">
+      <input type="radio"  [(ngModel)]="modeOfPayment"  [value]="ModeOfPayment[choice]">
         {{choice}}
     </label>
     </div>
-
     </div>
 
-    <div class="row">
+    <div class="row" *ngIf="(!saved && !placed)">
       <div class="col-lg-7">
         &nbsp;
       </div>
       <div class="col-lg-5 ">
-        <a class="btn btn-primary">Save Order</a>  &nbsp;
-        <a class="btn btn-primary">Place Order</a>
+        <a (click)="saveOrder()" class="btn btn-primary">Save Order</a> &nbsp;
+        <a (click)="placeOrder()" class="btn btn-primary">Place Order</a>
       </div>
+    </div>
+
+    <div *ngIf="saved || placed" style="font-size:large;color:green;text-align: center;">
+      &nbsp;
+      <div *ngIf="saved">
+        <i class="fa fa-save"></i>
+        Order has been saved
+      </div>
+      <div *ngIf="placed">
+        <i class="fa fa-check-square"></i>
+        Order has been placed successfully
+      </div>
+      <div style="color:rgb(58, 117, 226);text-align: center;">
+          Order ID: #{{orderId}}
+      </div>
+
     </div>

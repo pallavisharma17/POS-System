@@ -60,7 +60,7 @@
     </tr>
 
     <tr>
-      <td colspan="5" *ngIf="subtotal > 0">
+      <td colspan="5" *ngIf="subtotal > 0 && !checkout">
         <a (click)="toggleCheckout()" class="btn btn-primary">CHECKOUT Rs. {{grandTotal}}</a>
       </td>
     </tr>
