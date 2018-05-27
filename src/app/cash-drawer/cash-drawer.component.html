@@ -1,0 +1,24 @@
+<div class="table-responsive">
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Id</th>
+        <th>Start Balance</th>
+        <th>End Balance/th>
+          <th>Start Time</th>
+          <th>End Time</th>
+          <th>Employee</th>
+      </tr>
+    </thead>
+    <tbody *ngFor="let drawer of cashDrawers;">
+      <tr *ngIf="orderType=='placed'" class="success" (click)="openPlacedOrder(order)" style="cursor:pointer;">
+        <td>#{{drawer.id}}</td>
+        <td>Rs.{{drawer.startBalance}}</td>
+        <td>Rs.{{drawer.endBalance}}</td>
+        <td>{{drawer.startTime}}</td>
+        <td>{{drawer.endTime}}</td>
+        <td>{{drawer.employee.name}}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

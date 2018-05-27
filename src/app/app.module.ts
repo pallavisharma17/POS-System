@@ -18,6 +18,7 @@ import { CartComponent } from './cart/cart.component';
 import { CartService } from './services/cart.service';
 import { PaymentComponent } from './payment/payment.component';
 import { LoginComponent } from './login/login.component';
+import { CashDrawerComponent } from './cash-drawer/cash-drawer.component';
 
 const routes: Routes = [
   {
@@ -39,6 +40,10 @@ const routes: Routes = [
   {
     path: 'reload/:orderId',
     component: CartComponent
+  },
+  {
+    path: 'cashDrawer',
+    component: CashDrawerComponent
   }
 ]
 
@@ -51,7 +56,8 @@ const routes: Routes = [
     OrderComponent,
     CartComponent,
     PaymentComponent,
-    LoginComponent
+    LoginComponent,
+    CashDrawerComponent
   ],
   imports: [
     BrowserModule,

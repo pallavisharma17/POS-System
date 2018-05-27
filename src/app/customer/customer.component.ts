@@ -1,7 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { CustomerService } from '../services/customer.service';
 import { FormGroup, FormControl, Validators } from "@angular/forms";
-import { CustomerI } from '../models/CustomerI';
 import { CartComponent } from '../cart/cart.component';
 import { ProductComponent } from '../product/product.component';
 
@@ -32,8 +31,6 @@ export class CustomerComponent implements OnInit {
   setCustomerId(customerId) {
     this.customerId = customerId;
     this.res.emit(this.customerId)
-    // this.cartComponent.setCustomerId(customerId);
-    // this.productComponent.setCustomerId(customerId);
   }
 
 }
