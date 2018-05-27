@@ -9,7 +9,8 @@ import { CartService } from '../services/cart.service';
 })
 export class ProductComponent implements OnInit {
 
-  products: any[];
+  @Input() products: any[];
+  @Output() resProducts = new EventEmitter<any>();
   @Input() customerId: any;
   @Input() carts: any;
   @Output() res = new EventEmitter<any>();
@@ -17,16 +18,17 @@ export class ProductComponent implements OnInit {
 
   constructor(private productService: ProductService,
     private cartService: CartService) {
+    this.getProducts();
+    this.search = '';
   }
 
   ngOnInit() {
-    this.getProducts();
-    this.search = '';
   }
 
   getProducts() {
     this.productService.getProducts().subscribe(data => {
       this.products = data;
+      this.resProducts.emit(this.products);
     })
   }
 

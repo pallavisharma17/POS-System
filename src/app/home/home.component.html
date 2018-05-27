@@ -12,7 +12,7 @@
     <div class="row">
 
       <div class="col-lg-7" *ngIf=!checkout>
-        <app-product [customerId]="customerId" [carts]="carts" (res)="updateCart($event)"></app-product>
+        <app-product [customerId]="customerId" [carts]="carts" (res)="updateCart($event)" [products]="products" (resProducts)="updateProducts($event)"></app-product>
       </div>
 
       <div class="col-lg-5">

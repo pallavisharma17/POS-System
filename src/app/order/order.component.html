@@ -1,4 +1,4 @@
-<div class="table-responsive">
+<div class="table-responsive" *ngIf=!showOrderDetail>
   <table class="table">
     <thead>
       <tr>
@@ -17,7 +17,7 @@
         <td>{{order.time}}</td>
         <td>{{order.status}}</td>
       </tr>
-      <tr *ngIf="orderType=='saved'" class="danger">
+      <tr *ngIf="orderType=='saved'" class="danger" (click)="openSavedOrder(order)" style="cursor:pointer;">
         <td>#{{order.orderId}}</td>
         <td>Rs.{{order.total}}</td>
         <td>{{order.customerName}}</td>
@@ -26,4 +26,88 @@
       </tr>
     </tbody>
   </table>
+</div>
+
+<div *ngIf=showOrderDetail>
+  <div class="table-responsive">
+    <table class="table">
+      <thead>
+        <tr class="success">
+          <th  colspan="2" style="font-size:large;color:rgb(38, 48, 41);text-align: center;">Order: #{{orderDetail[0].order.id}}</th>    
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="default">
+          <td colspan="2" style="font-size:large;color:rgb(0, 0, 0);text-align: center;">
+            <strong>Rs.</strong>{{total}}</td>
+        </tr>
+        <tr class="default">
+          <td colspan="2" style="color:rgb(0, 0, 0);text-align: center;">
+            <strong>Created Date: </strong>{{orderDetail[0].order.createdDate}}</td>
+        </tr>
+        <tr class="default">
+          <td colspan="2" style="color:rgb(0, 0, 0);text-align: center;">
+            <strong>Status: </strong>{{orderDetail[0].order.status}}</td>
+        </tr>
+        <tr *ngIf=showSavedOrderDetail>
+          <td>
+            <a href="reload/{{orderDetail[0].order.id}}" class="btn btn-primary">Reload</a>
+          </td>
+          <td class="pull-right">
+            <a (click)="cancel()" class="btn btn-primary">Cancel</a>
+          </td>
+        </tr>
+        <tr class="warning">
+          <td colspan="2" style="color:rgb(129, 91, 9);">
+            <strong>Mode Of Payment</strong>
+          </td>
+        </tr>
+        <tr class="default">
+          <td colspan="2" style="color:rgb(0, 0, 0)">
+            {{orderDetail[0].order.modeOfPayment}}</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <table class="table">
+      <thead>
+        <tr class="danger">
+          <th style="color:rgb(38, 48, 41);">Products</th>
+          <th>Unit Price</th>
+          <th>Quantity</th>
+          <th>Subtotal</th>
+        </tr>
+      </thead>
+      <tbody *ngFor="let order of orderDetail">
+        <tr class="default">
+          <td> {{order.product.name}}</td>
+          <td>{{order.price}}</td>
+          <td>{{order.quantity}}</td>
+          <td>{{order.price * order.quantity}}</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <table class="table" style="color:rgb(38, 48, 41);text-align: right;">
+      <tbody>
+        <tr class="default">
+          <td>
+            <strong>Subtotal </strong>Rs. {{total}}</td>
+        </tr>
+        <tr class="default">
+          <td>
+            <strong>Tax </strong> Rs. 10</td>
+        </tr>
+        <tr class="default">
+          <td>
+            <strong>Grand Total </strong> Rs. {{total +10}}</td>
+        </tr>
+        <tr class="default">
+          <td>
+            <strong>Total Paid </strong> Rs. {{total +10}}</td>
+        </tr>
+      </tbody>
+    </table>
+
+  </div>
 </div>

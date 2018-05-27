@@ -10,6 +10,7 @@ export class HomeComponent implements OnInit {
   customerId: any;
   carts: any;
   checkout: boolean;
+  products: any;
 
   constructor() { }
 
@@ -27,6 +28,10 @@ export class HomeComponent implements OnInit {
 
   updateCheckout(checkout) {
     this.checkout = checkout;
+  }
+
+  updateProducts(products) {
+    this.products = products;
   }
 
 }

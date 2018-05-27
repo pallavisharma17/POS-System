@@ -21,21 +21,43 @@ export class CartComponent implements OnInit {
   @Input() checkout: boolean;
   @Output() resCheck = new EventEmitter<any>();
 
+  reloadState: string;
   subtotal: any;
   tax = 0.00;
   grandTotal = 0.0;
   customer: any
+  orderId: any;
 
   constructor(private route: ActivatedRoute, private cartService: CartService,
     private customerService: CustomerService) {
+    this.reloadState = '';
+    this.route.params.subscribe(res => {
+      this.orderId = res.orderId;
+      if (this.orderId) {
+        this.reloadCart();
+      }
+    })
   }
 
   ngOnInit() {
+    if (!this.reloadState) {
+      console.log('in cart')
+      console.log(this.customerId);
+      Promise.resolve(this.getCustomer())
+        .then(() => {
+          this.getCart()
+        })
+        .then(() => {
+          console.log("init se hua ye calc");
+          this.calculateBill()
+        })
+    }
+  }
+
+  initialSetup() {
     console.log('in cart')
     console.log(this.customerId);
-    Promise.resolve(this.customer = this.customerService.getCustomer(this.customerId).subscribe(data => {
-      this.customer = data;
-    }))
+    Promise.resolve(this.getCustomer())
       .then(() => {
         this.getCart()
       })
@@ -43,6 +65,12 @@ export class CartComponent implements OnInit {
         console.log("init se hua ye calc");
         this.calculateBill()
       })
+  }
+
+  getCustomer() {
+    this.customer = this.customerService.getCustomer(this.customerId).subscribe(data => {
+      this.customer = data;
+    })
   }
 
   getCart() {
@@ -107,6 +135,7 @@ export class CartComponent implements OnInit {
   }
 
   deleteCart() {
+    this.subtotal = 0.0;
     Promise.resolve(this.cartService.deleteCart(this.customerId).subscribe(data => {
       console.log("deleted " + data);
     }))
@@ -114,13 +143,35 @@ export class CartComponent implements OnInit {
         this.subtotal = 0.0;
         console.log("ho gya oye delete cart pe")
       })
+      .then(() => {
+        this.getCart();
+      })
   }
 
   toggleCheckout() {
     this.checkout = true;
     this.resCheck.emit(this.checkout);
+    if (this.reloadState == "checkCart") {
+      this.reloadState = "confirmOrder";
+    }
   }
 
-  
+  reloadCart() {
+    console.log(this.orderId);
+    Promise.resolve(this.cartService.reloadCart(this.orderId).subscribe(data => {
+      this.carts = data;
+      this.customerId = this.carts[0].cart.customer.id;
+      this.getCustomer();
+      this.reloadState = "checkCart";
+    }))
+      .then(() => {
+        this.res.emit(this.carts)
+      })
+      .then(() => {
+        console.log("reload calc");
+        this.calculateBill()
+      })
+
+  }
 
 }

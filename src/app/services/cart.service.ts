@@ -53,4 +53,10 @@ export class CartService {
     return this.subtotal;
   }
 
+  reloadCart(orderId): Observable<any> {
+    let order = {
+      id: orderId
+    }
+    return this.http.post(this.CART_URL + '/reload', order, httpOptions);
+  }
 }

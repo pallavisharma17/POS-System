@@ -17,10 +17,15 @@ import { OrderComponent } from './order/order.component';
 import { CartComponent } from './cart/cart.component';
 import { CartService } from './services/cart.service';
 import { PaymentComponent } from './payment/payment.component';
+import { LoginComponent } from './login/login.component';
 
 const routes: Routes = [
   {
     path: '',
+    component: LoginComponent
+  },
+  {
+    path: 'home',
     component: HomeComponent
   },
   {
@@ -30,6 +35,10 @@ const routes: Routes = [
   {
     path: 'orders/:order_type',
     component: OrderComponent
+  },
+  {
+    path: 'reload/:orderId',
+    component: CartComponent
   }
 ]
 
@@ -41,7 +50,8 @@ const routes: Routes = [
     ProductComponent,
     OrderComponent,
     CartComponent,
-    PaymentComponent
+    PaymentComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,

@@ -7,7 +7,7 @@
       <small *ngIf=carts>{{customer.email}}</small>
     </div>
   </div>
-  <div class="col-lg-3" *ngIf="!checkout">
+  <div class="col-lg-3" *ngIf="!checkout &&  reloadState !== 'confirmOrder'">
     <a (click)="deleteCart()" class="btn btn-danger">DELETE</a>
   </div>
 </div>
@@ -27,17 +27,17 @@
       <td>{{cart.product.name}}</td>
       <td> {{cart.product.price}}</td>
       <td>
-        <a (click)="decreaseQuantity(cart.product.id)" *ngIf="cart.quantity>1 && !checkout">
+        <a (click)="decreaseQuantity(cart.product.id)" *ngIf="cart.quantity>1 && !checkout && reloadState !== 'confirmOrder'">
           <i class="fa fa-minus-circle"></i>
         </a>
         {{cart.quantity}}
-        <a (click)="increaseQuantity(cart.product.id)" *ngIf="(cart.product.stock > cart.quantity) && !checkout">
+        <a (click)="increaseQuantity(cart.product.id)" *ngIf="(cart.product.stock > cart.quantity) && !checkout && reloadState !== 'confirmOrder'">
           <i class="fa fa-plus-circle"></i>
         </a>
       </td>
       <td> {{cart.product.price * cart.quantity}}</td>
       <td>
-        <a (click)="deleteProduct(cart.product.id)" *ngIf="!checkout">
+        <a (click)="deleteProduct(cart.product.id)" *ngIf="!checkout && reloadState !== 'confirmOrder'">
           <i class="fa fa-times-circle"></i>
         </a>
       </td>
@@ -60,10 +60,14 @@
     </tr>
 
     <tr>
-      <td colspan="5" *ngIf="subtotal > 0 && !checkout">
+      <td colspan="5" *ngIf="subtotal > 0 && !checkout && reloadState !== 'confirmOrder'">
         <a (click)="toggleCheckout()" class="btn btn-primary">CHECKOUT Rs. {{grandTotal}}</a>
       </td>
     </tr>
 
   </tbody>
 </table>
+
+<div *ngIf="reloadState == 'confirmOrder'">
+  <app-payment [customerId]="customerId"></app-payment>
+</div>

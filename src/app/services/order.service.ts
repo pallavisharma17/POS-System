@@ -33,6 +33,7 @@ export class OrderService {
   }
 
   getOrderDetails(orderId): Observable<any> {
-    return this.http.get(this.ORDER_URL + '/placed/order/' + orderId);
+    return this.http.get(this.ORDER_URL + '/order/' + orderId);
   }
+
 }

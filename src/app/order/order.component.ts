@@ -22,7 +22,9 @@ export class OrderComponent implements OnInit {
   orderType: any;
   showOrders: any[];
   total: any;
-  order: any;
+  orderDetail: any;
+  showOrderDetail: boolean;
+  showSavedOrderDetail: boolean;
 
   constructor(private route: ActivatedRoute, private orderService: OrderService) {
     this.employeeId = 1;
@@ -35,6 +37,8 @@ export class OrderComponent implements OnInit {
     } else if (this.orderType == "placed") {
       this.getEmployeePlacedOrders(this.employeeId);
     }
+    this.showOrderDetail = false;
+    this.showSavedOrderDetail = false;
   }
 
   ngOnInit() {
@@ -69,7 +73,7 @@ export class OrderComponent implements OnInit {
       this.total = 0.0;
 
       do {
-        this.total += this.orders[i].price;
+        this.total += this.orders[i].price * this.orders[i].quantity;
         i++;
       } while (i < this.orders.length && this.orders[i].order.id == this.orders[i - 1].order.id);
 
@@ -80,10 +84,27 @@ export class OrderComponent implements OnInit {
   }
 
   openPlacedOrder(order) {
-    console.log(order.orderId + " " + order.total);
+    this.total = order.total;
     this.orderService.getOrderDetails(order.orderId).subscribe(data => {
-      this.order = data;
+      this.orderDetail = data;
       console.log(data);
+      this.showOrderDetail = true;
     })
   }
+
+  openSavedOrder(order) {
+    this.showSavedOrderDetail = true;
+    this.total = order.total;
+    this.orderService.getOrderDetails(order.orderId).subscribe(data => {
+      this.orderDetail = data;
+      console.log(data);
+      this.showOrderDetail = true;
+    })
+  }
+
+  cancel() {
+    this.showOrderDetail = false;
+    this.showSavedOrderDetail = false;
+  }
+
 }
